@@ -1,0 +1,12 @@
+# create a lists
+# prompt the user to enter 10 name
+
+nameList = []
+name = "none"
+while iters:
+  name = input("enter name: ")
+  nameList.append(name)
+  iters = iters -1
+
+while nameList:
+  print("Hello, " +nameList.pop()+"1")
