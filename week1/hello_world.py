@@ -12,5 +12,3 @@ if "orange" in colors:
         print("so is tan")
     if "yellow" in colors:
         print("And yellow too")
-
-        
