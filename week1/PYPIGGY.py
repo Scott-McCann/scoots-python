@@ -8,23 +8,54 @@ def convert_word(word):
     else:
         return word[1:] + word[0] + "ay"
 
+def convert_sentence(sentence):
+    wordsList = sentence.split(' ')
+    pigSentence = ""
+    for word in wordsList:
+        pigSentence = pigSentence + convert_word(word)
+        pigSentence = pigSentence + " "
+    return pigSentence
 
-print("Hello and welcome to PYPIGGY v0.0.2")
+print("Hello and welcome to PYPIGGY v0.9.0")
+print(
+  '''
+          ""',_`""\        .---,
+            \   :-""``/`    |
+             `;'     //`\   /
+             /   __     |   ('.
+            |_ ./O)\     \  `) |
+           _/-.    `      `"`  |`-.
+       .-=; `                  /   `-.
+      /o o \   ,_,           .        '.
+      L._._;_.-'           .            `'-.
+        `'-.`             '                 `'-.
+            `.         '                        `-._
+              '-._. -'                              '.
+                 \                                    `|
+                  |                                     |
+                  |    |                                 ;   _.
+                  \    |           |                     |-.((
+                   ;.  \           /    /                |-.`\)
+                   | '. ;         /    |                 |(_) )
+                   |   \ \       /`    |                 ;'--'
+                    \   '.\    /`      |                /
+                     |   /`|  ;        \               /
+                     |  |  |  |-._      '.           .'
+                     /  |  |  |__.`'---"_;'-.     .-'
+                    //__/  /  |    .-'``     _.-'`
+                          //__/   //___.--''`
+''')
 while cont is 'y':
 
 
 
-    aword= input("please enter a word: ")
-    pig= convert_word(aword)
-    piglist.append(pig)
+    normal= input("please enter a sentence: ")
 
     cont= input("continue?: ")
 
     if cont is "n":
              continue
-
-for piggy in piglist:
-    print(piggy)
+print(convert_sentence(normal))
 
 
 
