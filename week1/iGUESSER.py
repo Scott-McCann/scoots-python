@@ -1,6 +1,9 @@
 from random import randint
 from random import random
 def pc_Guess(Int):
+    """will pick a random number from 1 to 1000, will then evaluate if it is
+       lower or higher than the argument (Int). will keep guessing until it guesses correctly.
+    """
     l= 1
     h = 1000
     g = randint(1,1000)
@@ -16,16 +19,19 @@ def pc_Guess(Int):
     print("I guessed : ", g, "YOU know I'm right!")
 
 def GAME():
+    """will ask the user for input, if the user enters a number outside the range it will complain.
+    will pass input to pc_Guess if valid number is given
+    """
     ##http://stackoverflow.com/questions/17877870/guess-the-number-game-optimization-user-creates-number-computer-guesses?answertab=oldest#tab-top
     Int = int(input("Please enter a number between 1 and 1000(I promise I wont cheat :D):"))
     if Int < 1 or Int > 1000:
-        print("[1, 1000]")
+        print("please enter a valid number: [1, 1000]")
     else:
         pc_Guess(Int)
 
 
 def secretmaker(int1=1, int2=1001):
-    """creates a list of numbers, returns random
+    """creates a list of numbers from (int1) to (int2) default values are (1,1001)
     """
     numbers = list(range(int1,int2))
     secret = random.choice(numbers)
