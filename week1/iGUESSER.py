@@ -95,6 +95,7 @@ if game == "me":
 
     if tries == 0:
         print("GAME OVER")
+        print("The number was: " + str(Secret)) 
 
 
 
