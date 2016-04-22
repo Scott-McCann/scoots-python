@@ -1,9 +1,27 @@
-import random
-def pc_Guess(int1=1,int2=1000):
-    """return a random integer from between two integers
-    default values:(int1 = 1, int2 = 2)
-    """
-    return random.randint(int1,int2)
+from random import randint
+from random import random
+def pc_Guess(Int):
+    l= 1
+    h = 1000
+    g = randint(1,1000)
+    while g != Int:
+        print("is this it?: ", g)
+        if g > Int:
+            h = g
+        elif g < Int:
+            l = g + 1
+
+        g = (l+h)//2
+
+    print("I guessed : ", g, "YOU know I'm right!")
+
+def GAME():
+    ##http://stackoverflow.com/questions/17877870/guess-the-number-game-optimization-user-creates-number-computer-guesses?answertab=oldest#tab-top
+    Int = int(input("Please enter a number between 1 and 1000(I promise I wont cheat :D):"))
+    if Int < 1 or Int > 1000:
+        print("[1, 1000]")
+    else:
+        pc_Guess(Int)
 
 
 def secretmaker(int1=1, int2=1001):
@@ -16,7 +34,6 @@ def secretmaker(int1=1, int2=1001):
 
 user_Guess = 0
 
-Secret = secretmaker(1,1001) #secret will be the number that must be guessed.
 
 tries = 5
 
@@ -25,7 +42,9 @@ tries = 5
 print("Who should guess a number?")
 game = input("(you/me) :" )
 if game == "me":
-    print(bin(Secret))
+    Secret = secretmaker(1,1001) #secret will be the number that must be guessed.
+
+    print(bin(Secret))#SHHHHHHHHHH!!!!!
 
     print('''
     010011100111010101101101 011000100110010101110010 01000111010000010100110101000101 01000111010000010100110101000101
@@ -71,6 +90,10 @@ if game == "me":
     if tries == 0:
         print("GAME OVER")
 
+
+
+
+###COMPUTER GUESSING GAME
 if game == "you":
     print('''
  ____ ____ ____ ____ ____ ____
@@ -78,4 +101,9 @@ if game == "you":
 ||__|||__|||__|||__|||__|||__||
 |/__\|/__\|/__\|/__\|/__\|/__\|
 ''')
-    print(Secret)
+    print("Hello! Welcome to iGUESS v.0.2.1")
+    print("I will do my best to guess whatever number you enter.")
+    if __name__ == GAME():
+        GAME()
+        #__name__ this allows the function `Game` to run.
+###http://stackoverflow.com/questions/419163/what-does-if-name-main-do
