@@ -1,5 +1,5 @@
 from random import randint
-from random import random
+import random
 def pc_Guess(Int):
     """will pick a random number from 1 to 1000, will then evaluate if it is
        lower or higher than the argument (Int). will keep guessing until it guesses correctly.
