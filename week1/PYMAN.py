@@ -1,6 +1,5 @@
 import random
-print(Welcome to PYMAN)
-print("Do you want to play a game? ")
+from random import choice
 
 def userGuess(guessList):
     while True:
@@ -14,7 +13,7 @@ def userGuess(guessList):
         elif guess in guessList:
             print("You already guessed that letter!")
         elif guess.isdigit():
-            print(Please enter a letter.)
+            print("Please enter a letter.")
         else:
             return guess
 
@@ -24,26 +23,50 @@ def playAgain():
     print("Do you want to play again?")
     return input().lower().startswith('y')
 
-def getWord
-    """picks a random word,
+def getWord():
+    """picks a random word
+    """
     wordlist = []
     with open('/usr/share/dict/words', 'r') as f:
         for line in f:
             wordlist.append(line.strip())
             secretWord = choice(wordlist)
-            wLength = len(secretWord)
+
+        return secretWord
 
 
 
+def blank(missed, correct, secretWord):
+    print("Missed letters:", end = '')
+    for letter in missed:
+        print(letter)
+    print()
 
+    blanks = '_' * len(secretWord)
 
-tries = 5
-guesses = 0
-hint = wLength * [" "]
-correctLetters = 0
-wrongLetters = 0
-userletters = ""
-while wrongLetters != tries and
+    for alpha in range(len(secretWord)):
+        if secretWord[alpha] in correct:
+            blanks = blanks[:alpha] + secretWord[alpha] + blanks [alpha+1:]
 
+    for letter in blanks:
+        print(letter, end = '')
+    print()
+
+wordList = []
+missed = ''
+correct = ''
+secretWord = getWord()
+wLength = len(secretWord)
+gameOver = False
+
+print("Welcome to PYMAN")
+print("Do you want to play a game? ")
 print(secretWord)
-print(wLength)
+
+while gameOver == False:
+    blank(missed, correct, secretWord)
+
+    guess = userGuess(missed + correct)
+
+    if guess in secretWord:
+        correct = correct + guess
