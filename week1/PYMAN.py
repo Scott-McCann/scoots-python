@@ -22,7 +22,7 @@ def user_guess(guessList):
 
 
 def play_again():
-    """ simply asks the user if they would like to play the game again."""
+    """asks the user if they would like to play the game again."""
 
     print("Do you want to play again?")
     return input().lower().startswith('y')
@@ -42,9 +42,8 @@ def get_word():
 
 
 def blank(missed, correct, secretWord):
-
+    """prints out an amount of blanks equal to the secretWord"""
     print("Missed letters:", end = '')
-
     for letter in missed:
         print(letter)
     print()
@@ -55,50 +54,61 @@ def blank(missed, correct, secretWord):
         if secretWord[alpha] in correct:
             blanks = blanks[:alpha] + secretWord[alpha] + blanks [alpha+1:]
 
+
     for letter in blanks:
         print(letter, end = '')
     print()
-tries = 6
+
+
+
+
+tries = 8
 wordList = []
 missed = ''
 correct = ''
 secretWord = get_word()
-wLength = len(secretWord)
+wordLength = len(secretWord)
 gameOver = False
 
 print("Welcome to PYMAN")
 print("Do you want to play a game? ")
 print(secretWord)
 
+#Game begins here.
 while gameOver is False :
     blank(missed, correct, secretWord)
-
+    print("There are " + str(wordLength) + " Letters!")
     guess = user_guess(missed + correct)
 
+    #Will check if the Users guess is in the word.
     if guess in secretWord:
         correct = correct + guess
 
+        #Checks if letter is in the word.
         allCorrect = True
         for alpha in range(len(secretWord)):
             if secretWord[alpha] not in correct:
                 allCorrect = False
                 break
 
+        #Win Condition
         if allCorrect:
             print("Thats Right! The word is "
-                 + secretWord
-                 + "! You Win! :D")
+            + secretWord
+            + "! You Win! :D")
             gameOver = True
 
+    #adds missed letters to list, counts down tries.
     else:
         missed = missed + guess
         tries = tries - 1
+        print("You now have : " + str(tries))
 
+        #Loss Condition
         if tries == 0:
             print("You have lost")
             print("The secret word is : " + secretWord)
             gameOver = True
-
 
 
     if gameOver:
