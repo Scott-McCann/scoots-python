@@ -1,3 +1,6 @@
+import csv
+
+
 # remove the vowels from the sentence
 sentence = "List Comprehensions are the Greatest!"
 vowels = ('a','e','i','o','u')
@@ -49,5 +52,30 @@ for word in wordlist:
 
 #use nested dictionary Comprehensions to get the average of homework 3
 homework3 = sum([grades[name]['Homework 3'] for name in grades]) / len(grades)
-
+print("Homework 3 Average: ")
 print(homework3)
+
+
+
+#normal mode. I have no clue what to do... I'm gonna use the csv module. https://automatetheboringstuff.com/chapter14/
+#https://docs.python.org/3/library/csv.html#module-csv
+
+#creat a list of temps for each day
+with open("wavedata.csv") as f:
+    reader = csv.DictReader(f)
+    water_temps = []
+    for row in reader:  # loop through every row
+        water_temps.append(row["Water Temp (deg. C)"])
+print("Water Temps: ")
+print(water_temps)
+    # waveTemp = [temp["Water Temp (deg. C)"] for temp in reader]
+    # tempList = (', '.join(waveTemp))
+    # print(tempList)
+
+print("wave Hieghts: ")
+
+#dictionary with dates as keys and wave heights as vaules.
+with open("wavedata.csv") as f:
+    reader = csv.DictReader(f)
+    dictionary = {(row["Date"] and row["Wave Height (m)"]) for row in reader}
+print(dictionary)
