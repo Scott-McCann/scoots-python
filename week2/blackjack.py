@@ -41,6 +41,7 @@ class PlayingCard:
         return self.value
 
     def Rank(self):
+        """Sets facecard value to int 10"""
         if self.value in ('jack', 'queen', 'king'):
             return 10
 
@@ -60,6 +61,7 @@ class Deck():
         return
 
     def deal_card(self):
+        """Deals one card onto table"""
         return self.cards.pop()
 
 
@@ -68,8 +70,9 @@ class Hand():
         self.cards = []
 
 
-    def get_card(self, aCard):
-        return self.cards.append(aCard)
+    def get_card(self, oneCard):
+        """Grabs card from Table"""
+        return self.cards.append(oneCard)
 
 
     # def get_hand(self):
@@ -84,6 +87,7 @@ class Hand():
     #     return cardTotal
 
     def get_Sum(self):
+        """Returns the total value for cards in hand."""
         # cardTotal = 0
         # for num in range(0, len(self.cards)-1):
         #     if self.cards[num].Rank() == 'ace':
@@ -104,6 +108,7 @@ class Hand():
         return cardTotal
 
     def get_results(self):
+        """Prints hands as well as card totals."""
         # self.get_hand()
         # print('Card Total: {0}'.format(self.get_Sum()))
         for num in range(0, len(self.cards)):
@@ -136,18 +141,20 @@ def display_player():
                                                                         ''')
 
 def display_dealer():
-        print("""
+    print("""
 .----..----. .--. .-.  .----.----. .----.    .---.  .--. .----..----. .----.
 | {}  | {_  / {} \| |  | {_ | {}  { {__     /  ___}/ {} \| {}  | {}  { {__
 |     | {__/  /\  | `--| {__| .-. .-._} }   \     /  /\  | .-. |     .-._} }
 `----'`----`-'  `-`----`----`-' `-`----'     `---'`-'  `-`-' `-`----'`----'
                                                                             """)
 def suspense():
+    """Animated dots for suspense"""
     print('.')
     time.sleep(1)
     print('..')
 
 def longsuspense():
+    """Longer animated dots"""
     print('.')
     time.sleep(1)
     print('..')
@@ -156,6 +163,7 @@ def longsuspense():
 
 
 def game():
+    """main Game loop"""
 
     print('''
 MM"""""""`YM M""MMMM""M MMMMMMMM""M MMP"""""""MM MM'""""'YMM M""MMMMM""M
@@ -200,10 +208,6 @@ MMMMMMMMMMMM MMMMMMMMMM MMMMMMMMMMM MMMMMMMMMMMM MMMMMMMMMMM MMMMMMMMMMM
 
             playerHand.get_card(deck.deal_card())
             if playerHand.get_Sum() > 21:
-                print('''
-#######################################################################################################################
-######################################################################################################################
-''')
                 display_player()
                 playerHand.get_results()
                 print("SORRY YOU BUSTED!")
