@@ -1,6 +1,11 @@
 import unittest
 import random
 import time
+import os
+
+def cls():
+    os.system('cls' if os.name=='nt' else 'clear')
+
 class PlayingCard:
     def __init__(self, value, suit):
         if suit not in self.suits:
@@ -44,7 +49,8 @@ class PlayingCard:
         """Sets facecard value to int 10"""
         if self.value in ('jack', 'queen', 'king'):
             return 10
-
+        elif self.value is 'ace':
+            return 11
         else:
             return int(self.value)
 
@@ -74,18 +80,6 @@ class Hand():
         """Grabs card from Table"""
         return self.cards.append(oneCard)
 
-
-    # def get_hand(self):
-    #     for num in range(0, len(self.cards)-1):
-    #         print(self.cards[num].long_name())
-
-
-    # def hand_sum(self):
-    #     cardTotal = 0
-    #     for num in range(0, len(self.cards)-1):
-    #         cardTotal += self.cards[num].Rank()
-    #     return cardTotal
-
     def get_Sum(self):
         """Returns the total value for cards in hand."""
         # cardTotal = 0
@@ -100,7 +94,7 @@ class Hand():
         # return cardTotal
         cardTotal= 0
         for num in range(0, len(self.cards)):
-            if self.cards[num].get_value() == 'ace':
+            if self.cards[num].Rank() == 'ace':
                 if cardTotal > 21:
                     cardTotal -= 10
             else:
@@ -109,11 +103,9 @@ class Hand():
 
     def get_results(self):
         """Prints hands as well as card totals."""
-        # self.get_hand()
-        # print('Card Total: {0}'.format(self.get_Sum()))
         for num in range(0, len(self.cards)):
             print(self.cards[num].long_name())
-        print('Total: {0}'.format(self.get_Sum()))
+        print('Card Total: {0}'.format(self.get_Sum()))
 
 
 
@@ -123,11 +115,14 @@ class Hand():
 
 def play_again():
     again = input("Play again? (y/n) : ").lower()
+    choice = None
     if again == 'y':
 
         game()
     else:
         print("BYE!")
+        choice = 'q'
+    return choice
 
 def display_player():
     print('''
@@ -176,9 +171,11 @@ MMMMMMMMMMMM MMMMMMMMMM MMMMMMMMMMM MMMMMMMMMMMM MMMMMMMMMMM MMMMMMMMMMM
                    HELLO! Welcome to PYJACK!
     ''')
     choice = 'h'
+    reveal = 'n'
     dealerHand = Hand()
     playerHand = Hand()
-    deck.shuffle
+    deck = Deck()
+    deck.shuffle()
     for card in range(2):
         playerHand.get_card(deck.deal_card())
         dealerHand.get_card(deck.deal_card())
@@ -205,7 +202,7 @@ MMMMMMMMMMMM MMMMMMMMMM MMMMMMMMMMM MMMMMMMMMMMM MMMMMMMMMMM MMMMMMMMMMM
 
         if choice == 'h':
             suspense()
-
+            cls()
             playerHand.get_card(deck.deal_card())
             if playerHand.get_Sum() > 21:
                 display_player()
@@ -220,14 +217,14 @@ MMMMMMMMMMMM MMMMMMMMMM MMMMMMMMMMM MMMMMMMMMMMM MMMMMMMMMMM MMMMMMMMMMM
 
             if dealerHand.get_Sum() <= 17:
                 longsuspense()
-                dealerHand.get_card(Hand)
+                dealerHand.get_card(deck.deal_card())
 
             elif dealerHand.get_Sum() > 17:
                 suspense()
                 print("The Dealer Stays")
 
 
-            elif dealerHand.get_Sum() > 21:
+            if dealerHand.get_Sum() > 21:
                 display_dealer()
                 dealerHand.get_results()
                 suspense()
@@ -268,6 +265,7 @@ MMMMMMMMMMMM MMMMMMMMMM MMMMMMMMMMM MMMMMMMMMMMM MMMMMMMMMMM MMMMMMMMMMM
                 print("DEALER WINS!")
                 print('YOU LOSE!')
                 break
+    play_again()
 
 
 
@@ -337,8 +335,11 @@ class TestHand(unittest.TestCase):
 
 if __name__ == '__main__':
     # unittest.main()
-    deck = Deck()
+
     game()
+    
+
+
 
 
 
