@@ -16,7 +16,7 @@ class PlayingCard:
         self.value = value
         self.suit = suit
 
-    suits = ('hearts', 'clubs', 'diamonds', 'spades')
+    suits = ('Hearts', 'Clubs', 'Diamonds', 'Spades')
     values = {'ace': 'ace',
               '2': 'two',
               '3': 'three',
@@ -94,17 +94,17 @@ class Hand():
         # return cardTotal
         cardTotal= 0
         for num in range(0, len(self.cards)):
-            if self.cards[num].Rank() == 'ace':
-                if cardTotal > 21:
-                    cardTotal -= 10
+            if self.cards[num].Rank() == "ace":
+                if cardTotal < 11:
+                    cardTotal += 1
             else:
                 cardTotal+= self.cards[num].Rank()
         return cardTotal
 
-    def get_results(self):
+    def getdetails(self):
         """Prints hands as well as card totals."""
         for num in range(0, len(self.cards)):
-            print(self.cards[num].long_name())
+            print("{0} > {1}".format(self.cards[num].long_name(), self.cards[num].short_name()))
         print('Card Total: {0}'.format(self.get_Sum()))
 
 
@@ -117,7 +117,7 @@ def play_again():
     again = input("Play again? (y/n) : ").lower()
     choice = None
     if again == 'y':
-
+        cls()
         game()
     else:
         print("BYE!")
@@ -125,23 +125,13 @@ def play_again():
     return choice
 
 def display_player():
-    print('''
-██╗¶¶¶██╗██████╗██╗¶¶¶████████╗¶¶¶¶¶¶██████╗█████╗██████╗██████╗███████████╗
-╚██╗¶██╔██╔═══████║¶¶¶████╔══██╗¶¶¶¶██╔════██╔══████╔══████╔══████╔════████║
-¶╚████╔╝██║¶¶¶████║¶¶¶████████╔╝¶¶¶¶██║¶¶¶¶█████████████╔██║¶¶█████████████║
-¶¶╚██╔╝¶██║¶¶¶████║¶¶¶████╔══██╗¶¶¶¶██║¶¶¶¶██╔══████╔══████║¶¶██╚════██╚═╚═╝
-¶¶¶██║¶¶╚██████╔╚██████╔██║¶¶██║¶¶¶¶╚████████║¶¶████║¶¶████████╔███████████╗
-¶¶¶╚═╝¶¶¶╚═════╝¶╚═════╝╚═╝¶¶╚═╝¶¶¶¶¶╚═════╚═╝¶¶╚═╚═╝¶¶╚═╚═════╝╚══════╚═╚═╝
-¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶
-                                                                        ''')
+
+    print("------------------Your Hand--------------------")
 
 def display_dealer():
-    print("""
-.----..----. .--. .-.  .----.----. .----.    .---.  .--. .----..----. .----.
-| {}  | {_  / {} \| |  | {_ | {}  { {__     /  ___}/ {} \| {}  | {}  { {__
-|     | {__/  /\  | `--| {__| .-. .-._} }   \     /  /\  | .-. |     .-._} }
-`----'`----`-'  `-`----`----`-' `-`----'     `---'`-'  `-`-' `-`----'`----'
-                                                                            """)
+    print("-------------The Dealer is Showing:------------")
+
+
 def suspense():
     """Animated dots for suspense"""
     print('.')
@@ -168,25 +158,31 @@ MM  MMMMMMMM MMMb  dMMM MMMMMMMM  M M  MMMMM  MM M  MMMMMMMM M  MMMb. YM
 MM  MMMMMMMM MMMM  MMMM M. `MMM' .M M  MMMMM  MM M. `MMM' .M M  MMMMb  M
 MM  MMMMMMMM MMMM  MMMM MM.     .MM M  MMMMM  MM MM.     .dM M  MMMMM  M
 MMMMMMMMMMMM MMMMMMMMMM MMMMMMMMMMM MMMMMMMMMMMM MMMMMMMMMMM MMMMMMMMMMM
+                - A BlackJack Game-
+
                    HELLO! Welcome to PYJACK!
-    ''')
+               -                               -
+                 try to get 21 without going over.
+                 -       or at least beat the dealer    -
+            ''')
     choice = 'h'
     reveal = 'n'
     dealerHand = Hand()
     playerHand = Hand()
     deck = Deck()
     deck.shuffle()
+    #deals two cards to each player
     for card in range(2):
         playerHand.get_card(deck.deal_card())
         dealerHand.get_card(deck.deal_card())
 
     while choice != 'q':
-
+    #displays ascii art and prints cards and Total
         display_player()
-        playerHand.get_results()
+        playerHand.getdetails()
 
         display_dealer()
-        dealerHand.get_results()
+        dealerHand.getdetails()
 
         if dealerHand.get_Sum() == 21:
             print("Dealer got BlackJack")
@@ -197,16 +193,16 @@ MMMMMMMMMMMM MMMMMMMMMM MMMMMMMMMMM MMMMMMMMMMMM MMMMMMMMMMM MMMMMMMMMMM
             print("YOU WIN!!")
             break
 
-        choice = input("do you want to [H]it, [S]tand, or [Q]: ").lower()
+        choice = input("do you want to [H]it, [S]tay, or [Q]uit: ").lower()
 
 
         if choice == 'h':
             suspense()
-            cls()
+
             playerHand.get_card(deck.deal_card())
             if playerHand.get_Sum() > 21:
                 display_player()
-                playerHand.get_results()
+                playerHand.getdetails()
                 print("SORRY YOU BUSTED!")
                 break
             # if playerHand.get_Sum() == 21:
@@ -217,6 +213,7 @@ MMMMMMMMMMMM MMMMMMMMMM MMMMMMMMMMM MMMMMMMMMMMM MMMMMMMMMMM MMMMMMMMMMM
 
             if dealerHand.get_Sum() <= 17:
                 longsuspense()
+                # cls()
                 dealerHand.get_card(deck.deal_card())
 
             elif dealerHand.get_Sum() > 17:
@@ -226,45 +223,61 @@ MMMMMMMMMMMM MMMMMMMMMM MMMMMMMMMMM MMMMMMMMMMMM MMMMMMMMMMM MMMMMMMMMMM
 
             if dealerHand.get_Sum() > 21:
                 display_dealer()
-                dealerHand.get_results()
+                # cls()
+                dealerHand.getdetails()
                 suspense()
                 print("DEALER BUSTS! YOU WIN!!")
                 break
 
             elif playerHand.get_Sum() > 21:
                 display_player()
-                playerHand.get_results()
+                # cls()
+                playerHand.getdetails()
                 suspense()
                 print("SORRY YOU BUSTED")
                 break
 
             elif playerHand.get_Sum() == 21:
                 display_player()
-                playerHand.get_results()
+                # cls()
+                playerHand.getdetails()
                 suspense()
                 print("CONGRATUALTIONS, YOU WIN!!")
                 break
 
             elif playerHand.get_Sum() > dealerHand.get_Sum():
+                # cls()
                 display_player()
                 suspense()
-                playerHand.get_results()
+                playerHand.getdetails()
                 display_dealer()
                 suspense()
-                dealerHand.get_results()
+                dealerHand.getdetails()
                 print('CONGRATUALTIONS, YOU WON!!')
                 break
 
             elif playerHand.get_Sum() < dealerHand.get_Sum():
+                # cls()
                 display_player()
                 suspense()
-                playerHand.get_results()
+                playerHand.getdetails()
                 display_dealer()
                 suspense()
-                dealerHand.get_results()
+                dealerHand.getdetails()
                 print("DEALER WINS!")
                 print('YOU LOSE!')
                 break
+
+            else:
+                display_player()
+                suspense()
+                playerHand.getdetails()
+                display_dealer()
+                suspense()
+                dealerHand.getdetails()
+                print("PUSH!")
+                break
+
     play_again()
 
 
@@ -337,7 +350,7 @@ if __name__ == '__main__':
     # unittest.main()
 
     game()
-    
+
 
 
 
@@ -385,8 +398,8 @@ if __name__ == '__main__':
 
 
     #     print('Your hand: ']
-    #     playerHand.get_results()
-    #     dealerHand.get_results()
+    #     playerHand.getdetails()
+    #     dealerHand.getdetails()
     # elif choice == 's':
     #     while dealerHand.get_Sum() < 17:
     #         dealerHand.get_card(deck.deal_card())
