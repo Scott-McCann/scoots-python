@@ -1,6 +1,7 @@
 from random import shuffle
 import time
 import os
+import sys
 
 class blackjack():
     def __init__(self, player_names, number_of_decks, wallet=100):
@@ -177,10 +178,27 @@ def play_again():
     choice = None
     if again == 'y':
         cls()
-
+    else:
+        cls()
+        sys.exit()
 
 def main():
     cls()
+    print('''
+MM"""""""`YM M""MMMM""M MMMMMMMM""M MMP"""""""MM MM'""""'YMM M""MMMMM""M
+MM  mmmmm  M M. `MM' .M MMMMMMMM  M M' .mmmm  MM M' .mmm. `M M  MMMM' .M
+M'        .M MM.    .MM MMMMMMMM  M M         `M M  MMMMMooM M       .MM
+MM  MMMMMMMM MMMb  dMMM MMMMMMMM  M M  MMMMM  MM M  MMMMMMMM M  MMMb. YM
+MM  MMMMMMMM MMMM  MMMM M. `MMM' .M M  MMMMM  MM M. `MMM' .M M  MMMMb  M
+MM  MMMMMMMM MMMM  MMMM MM.     .MM M  MMMMM  MM MM.     .dM M  MMMMM  M
+MMMMMMMMMMMM MMMMMMMMMM MMMMMMMMMMM MMMMMMMMMMMM MMMMMMMMMMM MMMMMMMMMMM
+                - A BlackJack Game-
+
+                   HELLO! Welcome to PYJACK!
+               -                               -
+                 try to get 21 without going over.
+                 -       or at least beat the dealer    -
+                 ''')
     try:
         number_of_decks = int(input('How many decks? '))
     except:
@@ -200,6 +218,8 @@ def main():
             game.dealer_turn()
             game.who_wins()
             play_again()
+
+
 
 if "__main__" == __name__:
 	main()
