@@ -51,7 +51,7 @@ def insert(List):
                 goals,
                 yellow_cards,
                 red_cards)
-                VALUES (%s, %s,%s, %s, %s, %s, %s, %s, %s, %s)""", List)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""", List)
     conn.commit()
     cur.close()
 
@@ -79,17 +79,6 @@ def footy_Out():
 
     return data
 
-# def footy_search(stat):
-#     conn = psycopg2.connect("dbname=scottmccann user=scottmccann")
-#     cur = conn.cursor()
-#     print(stat)
-#     cur.execute("""SELECT %s FROM man_u""",(stat,))
-#     data = cur.fetchall()
-#     conn.commit()
-#     cur.close()
-#
-#     return data
-
 
 #Delete data from table
 def footy_Delete():
@@ -103,41 +92,22 @@ def footy_Delete():
 
 
 
-
-# @route('/')
-# @route('/hello/')
-# @route('/hello/<name>')
-# def index(name="Pardner"):
-#
-#     return template('<div>Hello, {{person}}!</div>', person=name)
-#
-#
-# @route('/ManU')
-# def send_Data():
-#     pullStats = footy_Out()
-#     sendStats = pullStats
-#     response.content_type = 'application/json; charset=UTF-8'
-#
-#     return {1:sendStats[0]}
-#
-#
-# @route('/ManU/<stat:re:[a-z]+>')
-# def player_search(stat):
-#     search = footy_search(stat)
-#     response.content_type = 'application/json; charset=UTF-8'
-#
-#     return {stat: search}
-
-
-
-
-
-########
-
-# delete = footy_Delete()
-# readStats = stat_Reader()
-# insertStats = read_ToDb(readStats)
-
+def update(List):
+    conn =  psycopg2.connect('dbname=scottmccann user=scottmccann')
+    cur = conn.cursor()
+    cur.execute("""
+    UPDATE man_u SET kit = %s,
+           first_name = %s,
+           last_name = %s,
+           position = %s,
+           born = %s,
+           international = %s,
+           games_played = %s,
+           goals =% s,
+           yellow_cards = %s,
+           red_cards= %s
+     WHERE kit = %s
+     """, List)
 
 
 print("""
@@ -191,6 +161,7 @@ while choice is not 'q':
     print("[d]elete, [l]oad, [u]pdate, [v]iew, [i]nsert, [q]uit ")
 
     choice = input("What would you like to do? ")
+
     if choice is 'd':
         delete = footy_Delete()
         print("cleaning table....")
@@ -209,6 +180,62 @@ while choice is not 'q':
         print('..')
         time.sleep(1)
         print('Table loaded')
+
+    elif choice is 'u':
+        updateList = []
+        accept = ' '
+
+        print("Which player would you like to update?: ")
+        player = input("Enter the kit # of the player you would like to update:")
+        stat = input("Please enter the kit #:")
+        updateList.append(stat)
+        stat = input("please enter a first name:")
+        updateList.append(stat)
+        stat = input("please enter a Last name:")
+        updateList.append(stat)
+        stat = input("please enter a Position:")
+        updateList.append(stat)
+        stat = input("please enter where the player was born?:")
+        updateList.append(stat)
+        stat = input("Does the player play on an international team?:")
+        updateList.append(stat)
+        stat = input("How many games has he played?:")
+        updateList.append(stat)
+        stat = input("How many goals has he scored?:")
+        updateList.append(stat)
+        stat = input("How many yellow cards does he have?:")
+        updateList.append(stat)
+        stat = input("How many red cards does he have?:")
+        updateList.append(stat)
+        updateList.append(player)
+
+        print("This is the Player You wish to add:")
+        print('''Kit#: {} Name: {} {}
+        position: {}
+        from: {}
+        international: {}
+        games: {}
+        goals: {}
+        yellow cards: {}
+        red cards: {}'''.format(str(updateList[0]),
+                                 str(updateList[1]),
+                                 str(updateList[2]),
+                                 str(updateList[3]),
+                                 str(updateList[4]),
+                                 str(updateList[5]),
+                                 str(updateList[6]),
+                                 str(updateList[7]),
+                                 str(updateList[8]),
+                                 str(updateList[9])))
+
+        accept = input("Would you like to submit this player to the Database?[y/n]")
+        if accept is 'y':
+            update(updateList)
+
+        else:
+            updateList = []
+
+
 
     elif choice is 'v':
         viewChoice = 'a'
@@ -239,6 +266,9 @@ while choice is not 'q':
                             str(row[7]),
                             str(row[8]),
                             str(row[9])))
+
+                time.sleep(1)
+
 
         elif viewChoice is 'p':
             for row in data:
